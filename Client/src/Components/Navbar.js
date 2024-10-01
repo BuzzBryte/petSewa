@@ -57,7 +57,7 @@ const Navbar = () => {
             <MDBIcon icon="bars" fas />
           </MDBNavbarToggler>
           <h1 className="logo" onClick={() => navigate('/')}>
-            Kitter
+            PetSewa
           </h1>
           <MDBCollapse navbar show={showCollapse} id="navbarCollapse">
             <MDBNavbarNav className="navbar-links">

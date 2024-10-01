@@ -5,11 +5,11 @@
 }
 
 .logo {
-   font-family: "Carter One", cursive;
+   font-family: "Arial";
 }
 
 .nav-container {
-   background-color: white;
+   background-color: rgb(255, 255, 255);
    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
    position: fixed;
    padding: 17px 20px;
