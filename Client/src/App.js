@@ -9,7 +9,6 @@ import Navbar from './Components/Navbar';
 import Login from './Pages/Login';
 import Cart from './Pages/Cart';
 import Orders from './Pages/Orders';
-import DogFood from './Pages/DogFood';
 import Food from './Pages/Food';
 import Toy from './Pages/Toy';
 import Details from './Pages/Details';
@@ -41,8 +40,6 @@ function App() {
           <Route path = '/appointments' element = {<Appointments />} />
           <Route path = '/bookAppointment' element = {<BookAppointment />} />
           <Route path = '/mySubscriptions' element={<Subscriptions />} />
-          <Route path="/dog-food" element={<DogFood />} />
-          {/* <Route path="/cat-food" element={<CatFood />} /> */}
           <Route path="/food" element={<Food />} />
           <Route path="/accessories" element={<Accessories />} />
           <Route path="/subscriptionProducts" element={<SubscriptionProducts />} />

@@ -29,7 +29,7 @@ export default function Details() {
         status: 'active'
       }
       console.log(subscriptionObject)
-      const response = await axios.post(`${process.env.REACT_APP_BACKEND_BASE_URL}/users/addSubscription`, {subscription: subscriptionObject})
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_BASE_URL}/api/users/addSubscription`, {subscription: subscriptionObject})
       setTimeout( () => {
         navigate('/mySubscriptions')
       }, 300)

@@ -13,7 +13,7 @@ function Subscriptions() {
     const fetchSubscriptions = async () => {
       try {
         console.log()
-        const response = await axios.get(`${process.env.REACT_APP_BACKEND_BASE_URL}/users/getSubscriptionsByUserId/${userId}`);
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_BASE_URL}/api/users/getSubscriptionsByUserId/${userId}`);
         console.log(response.data.data)
         setSubscriptions(response.data.data);
       } catch (error) {
