@@ -25,7 +25,7 @@ const Categories = () => {
 
         {/* Pet Type Dropdown */}
         <MDBDropdown>
-          <MDBDropdownToggle color="primary">Pet-Type: {selectedPetType || 'Select'}</MDBDropdownToggle>
+          <MDBDropdownToggle color="secondary"><h6><b>Choose Your Pet-Type: {selectedPetType || 'Select'}</b></h6></MDBDropdownToggle>
           <MDBDropdownMenu>
             <MDBDropdownItem link onClick={() => handlePetTypeSelect('dog')}>Dog</MDBDropdownItem>
             <MDBDropdownItem link onClick={() => handlePetTypeSelect('cat')}>Cat</MDBDropdownItem>
