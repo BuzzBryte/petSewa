@@ -13,7 +13,7 @@ const adminSchema = new mongoose.Schema({
             subtitle: String,
             date: mongoose.Schema.Types.Date,
             messageList: [{
-                    position: String,
+                    position: {type: String, enum: ['left', 'right'], default: 'left'},
                     type: { type: String, default: 'text'},
                     isRead: Boolean,
                     date: mongoose.Schema.Types.Date
