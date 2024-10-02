@@ -27,7 +27,7 @@ export default function Dashboard() {
   const { loginStatus, setLoginStatus } = useContext(PetContext);
   const name = localStorage.getItem('name');
   const role = localStorage.getItem('role');
-
+  
   return (
     <div className="admin-dashboard">
       {role === 'admin' ? (

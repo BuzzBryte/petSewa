@@ -31,7 +31,7 @@ export default function Details() {
       console.log(subscriptionObject)
       const response = await axios.post(`${process.env.REACT_APP_BACKEND_BASE_URL}/users/addSubscription`, {subscription: subscriptionObject})
       setTimeout( () => {
-        navigate('/subscriptions')
+        navigate('/mySubscriptions')
       }, 300)
     }catch(err) {
       console.log('An error occurred', err)
@@ -41,6 +41,7 @@ export default function Details() {
   useEffect(() => {
     const fetchData = async () => {
       const products = await fetchProductDetails(id);
+      console.log(products)
       setItem(products);
     };
 

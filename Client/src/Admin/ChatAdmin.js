@@ -1,7 +1,6 @@
 import 'react-chat-elements/dist/main.css';
 import { MDBContainer } from 'mdb-react-ui-kit';
-import { ChatItem, MessageList, Navbar } from 'react-chat-elements';
-import CustomChatInput from '../Components/Chat/CustomChatInput';
+import { ChatItem, MessageList, Navbar, Input, Button } from 'react-chat-elements';
 import {useState} from 'react'
 const messageExampleObject = [
     {
@@ -152,7 +151,7 @@ export default function ChatAdmin(){
     }     
     const handleChatInput = () => {
         
-    }                                                                    
+    }                                                             
     return <>
         <MDBContainer className='d-flex bg-light shadow-5 rounded-5 justify-content-center'>
             <MDBContainer className='d-flex flex-column'>
@@ -183,7 +182,11 @@ export default function ChatAdmin(){
                 toBottomHeight={'100%'}
                 dataSource={activeChat.messageList}
                 />
-                <CustomChatInput />
+                <Input
+                placeholder="Type here..."
+                multiline={true}
+                rightButtons={<Button text='send' onClick={()=> handleChatInput()} title ='Send'/>}
+                />
             </MDBContainer>
 
         </MDBContainer>
