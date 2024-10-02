@@ -17,6 +17,7 @@ const PetProvider = ({ children }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        console.log("hello")
         const response = await axios.get('/api/users/products');
         setProducts(response.data.data);
       } catch (error) {

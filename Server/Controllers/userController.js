@@ -104,11 +104,9 @@ module.exports = {
   getProductsByCategory: async (req, res) => {
     try {
       const { pettype, categoryname } = req.params;  // Extract pettype and category from URL params
-      console.log(`Fetching products for PetType: ${pettype} and Category: ${categoryname}`);
   
       // Fetch products that match the pettype and category
       const products = await Product.find({ petType: pettype, category: categoryname });
-      console.log(products)
       // Check if products exist for the given pettype and category
       if (!products.length) {
         return res.status(404).json({
