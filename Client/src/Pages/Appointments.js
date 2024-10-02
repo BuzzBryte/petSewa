@@ -12,7 +12,7 @@ function Appointments() {
   useEffect(() => {
     const fetchAppointments = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_BACKEND_BASE_URL}/users/getAppointmentsByUserId/${userId}`);
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_BASE_URL}/api/users/getAppointmentsByUserId/${userId}`);
         setAppointments(response.data.data);
       } catch (error) {
         toast.error(error.response.data.message);
