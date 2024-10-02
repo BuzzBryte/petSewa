@@ -7,6 +7,7 @@ import ProductsAdmin from './ProductsAdmin';
 import AddProductAdmin from './AddProductAdmin';
 import EditProductAdmin from './EditProductAdmin';
 import UserDetailsAdmin from './UserDetailsAdmin';
+import ChatAdmin from './ChatAdmin';
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../Styles/Admin.css';
 
@@ -21,6 +22,7 @@ export default function Dashboard() {
   const isAddProducts = location.pathname.endsWith('add-products');
   const isUserDetails = location.pathname.startsWith('/dashboard/users/');
   const isEditProducts = location.pathname.startsWith('/dashboard/products/');
+  const isChat = location.pathname.startsWith('/dashboard/chat')
 
   const { loginStatus, setLoginStatus } = useContext(PetContext);
   const name = localStorage.getItem('name');
@@ -39,6 +41,10 @@ export default function Dashboard() {
               <li onClick={() => navigate('/dashboard/users')}>
                 <MDBIcon fas icon="user" />
                 <span>Users</span>
+              </li>              
+              <li onClick={() => navigate('/dashboard/chat')}>
+                <MDBIcon fas icon="message" />
+                <span>Chats</span>
               </li>
               <li onClick={() => navigate('/dashboard/products')}>
                 <MDBIcon fas icon="list-ul" />
@@ -48,6 +54,7 @@ export default function Dashboard() {
                 <MDBIcon fas icon="plus" />
                 <span>Add Product</span>
               </li>
+
             </ul>
           </aside>
 
@@ -80,6 +87,7 @@ export default function Dashboard() {
                   {isAddProducts && <AddProductAdmin />}
                   {isEditProducts && <EditProductAdmin />}
                   {isUserDetails && <UserDetailsAdmin />}
+                  {isChat && <ChatAdmin />}
                 </>
               )}
             </div>
