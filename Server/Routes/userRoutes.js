@@ -15,7 +15,7 @@ router
   .get('/products', tryCatch(controller.getAllProducts))
   .get('/products/top-selling', tryCatch(controller.getTopSellingProducts))
   .get('/products/:id', tryCatch(controller.getProductById))
-  .get('/products/category/:categoryname', tryCatch(controller.getProductsByCategory))
+  .get('/products/category/:pettype/:categoryname', tryCatch(controller.getProductsByCategory))
 
   // .use(checkAuth(process.env.USER_ACCESS_TOKEN_SECRET))
 

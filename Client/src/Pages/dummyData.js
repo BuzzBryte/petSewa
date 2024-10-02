@@ -1,20 +1,20 @@
 export const categories = [
   {
-    name: 'Cat Food',
+    name: 'Food',
     imageUrl: 'https://res.cloudinary.com/dmzqckfj4/image/upload/v1706504912/home%20page/zcl6uneww32lxvmywlqr.jpg',
-    path: '/cat-food',
+    path: '/food',
   },
   {
-    name: 'Cat Toys',
+    name: 'Toys',
     imageUrl: 'https://res.cloudinary.com/dmzqckfj4/image/upload/v1706504946/home%20page/zitnln1nvxqgik1crepq.jpg',
   },
   {
-    name: 'Dog Food',
+    name: 'Accessoies',
     imageUrl: 'https://res.cloudinary.com/dmzqckfj4/image/upload/v1706504966/home%20page/m9pfuvaf1ri1wxzvfknz.jpg',
     path: '/dog-food',
   },
   {
-    name: 'Dog Toys',
+    name: 'Subscription',
     imageUrl: 'https://res.cloudinary.com/dmzqckfj4/image/upload/v1706504990/home%20page/vrgxavjppnnjx3c7pphw.jpg',
   },
 ];

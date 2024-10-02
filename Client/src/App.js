@@ -34,12 +34,13 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/dog-food" element={<DogFood />} />
-          <Route path="/cat-food" element={<CatFood />} />
+          {/* <Route path="/cat-food" element={<CatFood />} /> */}
+          <Route path="/food" element={<CatFood />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/products" element={<AllProducts />} />
           <Route path="/products/:id" element={<Details />} />
           <Route path="/dog-food/:id" element={<Details />} />
-          <Route path="/cat-food/:id" element={<Details />} />
+          <Route path="/food/:id" element={<Details />} />
           <Route path="/payment/success" element={<SuccessPayment />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/dashboard" element={<FixedAdmin />} />

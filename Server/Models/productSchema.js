@@ -6,6 +6,7 @@ const productSchema = new mongoose.Schema({
   description: String,
   price: Number,
   image: String,
+  petType: String,
   category: String,
 });
 
@@ -15,6 +16,7 @@ const productValidationSchema = Joi.object({
   description: Joi.string().min(10).required(),
   price: Joi.number().min(1).required(),
   image: Joi.string().required(),
+  petType: Joi.string().required(),
   category: Joi.string().min(3).max(20).required(),
 });
 
