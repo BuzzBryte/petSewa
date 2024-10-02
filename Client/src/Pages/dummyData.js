@@ -7,15 +7,17 @@ export const categories = [
   {
     name: 'Toys',
     imageUrl: 'https://res.cloudinary.com/dmzqckfj4/image/upload/v1706504946/home%20page/zitnln1nvxqgik1crepq.jpg',
+    path: '/toys'
   },
   {
-    name: 'Accessoies',
+    name: 'Accessories',
     imageUrl: 'https://res.cloudinary.com/dmzqckfj4/image/upload/v1706504966/home%20page/m9pfuvaf1ri1wxzvfknz.jpg',
-    path: '/dog-food',
+    path: '/accessories',
   },
   {
     name: 'Subscription',
     imageUrl: 'https://res.cloudinary.com/dmzqckfj4/image/upload/v1706504990/home%20page/vrgxavjppnnjx3c7pphw.jpg',
+    path: '/subscription',
   },
 ];
 

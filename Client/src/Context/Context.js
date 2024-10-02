@@ -52,7 +52,7 @@ const PetProvider = ({ children }) => {
 
   const fetchDogFood = async () => {
     try {
-      const response = await axios.get('/api/users/products/category/Dog');
+      const response = await axios.get(`http://localhost:5000/api/users/products/category/${selectedPetType}/toys`);
       return response.data.data;
     } catch (error) {
       toast.error(error.response.data.message);
