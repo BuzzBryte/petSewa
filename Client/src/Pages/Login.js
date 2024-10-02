@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { MDBContainer } from 'mdb-react-ui-kit';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { PetContext } from '../Context/Context';
 import { Input } from '../Components/Input';
 import { axios } from '../Utils/Axios';
@@ -8,6 +8,7 @@ import Button from '../Components/Button';
 import toast from 'react-hot-toast';
 
 function Login() {
+  const location = useLocation();
   const navigate = useNavigate();
   const { setLoginStatus } = useContext(PetContext);
 
@@ -18,16 +19,16 @@ function Login() {
     const password = e.target.password.value;
     const loginData = { email, password };
     const adminEmail = process.env.REACT_APP_ADMIN_EMAIL;
-
+    const isAdminLogin = location.pathname.startsWith('/admin/login')
     if (!email || !password) {
       return toast.error('Enter All the Inputs');
     }
 
-    const endpoint = email === adminEmail ? '/api/admin/login' : '/api/users/login';
+    const endpoint = isAdminLogin ? '/api/admin/login' : '/api/users/login';
 
     try {
       const response = await axios.post(endpoint, loginData);
-      email === adminEmail
+      isAdminLogin
         ? localStorage.setItem('role', 'admin')
         : localStorage.setItem('userID', response.data.data.userID);
 
@@ -35,7 +36,7 @@ function Login() {
       localStorage.setItem('jwt_token', response.data.data.jwt_token);
       toast.success(response.data.message);
       setLoginStatus(true);
-      navigate(email === adminEmail ? '/dashboard' : '/');
+      navigate(isAdminLogin ? '/dashboard' : '/');
     } catch (error) {
       toast.error(error.response.data.message);
     }

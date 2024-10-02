@@ -53,6 +53,7 @@ function App() {
           <Route path="/food/:id" element={<Details />} />
           <Route path="/payment/success" element={<SuccessPayment />} />
           <Route path="/orders" element={<Orders />} />
+          <Route path='/admin/login' element = {<Login />} />
           <Route path="/dashboard" element={<FixedAdmin />} />
           <Route path="/dashboard/users" element={<FixedAdmin />} />
           <Route path="/dashboard/users/:id" element={<FixedAdmin />} />

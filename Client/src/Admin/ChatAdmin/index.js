@@ -1,7 +1,9 @@
 import 'react-chat-elements/dist/main.css';
 import { MDBContainer } from 'mdb-react-ui-kit';
 import { ChatItem, MessageList, Navbar, Input, Button } from 'react-chat-elements';
-import {useState} from 'react'
+import {useState, useContext} from 'react'
+import { PetContext } from '../../Context/Context';
+import CustomMessageList from '../../Components/CustomMessageList';
 const messageExampleObject = [
     {
         chatListItemId: 'somerandom Message3',
@@ -134,7 +136,7 @@ const messageExampleObject = [
 ]
 
 export default function ChatAdmin(){
-
+    const {socket} = useContext(PetContext)
     const chatList = messageExampleObject.map(item => {return {chatListeItemId: item.chatListItemId,
                                                 title: item.avatar,
                                                 avatar: item.avatar,
@@ -168,7 +170,7 @@ export default function ChatAdmin(){
                 }
 
             </MDBContainer>
-            <MDBContainer className='flex-column'>
+            <MDBContainer className='d-flex flex-column'>
                 <Navbar
                     className='bg-light'
                     left={<div>Logo</div>}
@@ -176,16 +178,11 @@ export default function ChatAdmin(){
                     right={<div>Contact</div>}
                     type="light"
                 />
-                <MessageList
-                className='message-list'
-                lockable={true}
-                toBottomHeight={'100%'}
-                dataSource={activeChat.messageList}
-                />
+                <CustomMessageList messageList={activeChat.messageList} adminPosition='right' />
                 <Input
-                placeholder="Type here..."
-                multiline={true}
-                rightButtons={<Button text='send' onClick={()=> handleChatInput()} title ='Send'/>}
+                    className='chat-input'
+                    placeholder="Type here..."
+                    rightButtons={<Button text='send' onClick={()=> handleChatInput()} title ='Send'/>}
                 />
             </MDBContainer>
 

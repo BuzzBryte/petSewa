@@ -1,7 +1,9 @@
-import {useState} from 'react'
+import {useState, useContext} from 'react'
 import {MessageList, Navbar, Input, Button } from 'react-chat-elements';
 import { MDBIcon, MDBContainer } from 'mdb-react-ui-kit';
-import '../Styles/ChatWithUs.css'
+import CustomMessageList from '../CustomMessageList'
+import './styles.css'
+import { PetContext } from '../../Context/Context';
 
 const messageList= [
     {
@@ -39,6 +41,8 @@ const messageList= [
 ]
 export default function ChatWithUs(){
     const [showChat, setShowChat]=useState(false)
+    const {loginStatus} = useContext(PetContext)
+    const role = localStorage.getItem('role')
     const handleClick = () => {
         setShowChat(true)
     }
@@ -48,37 +52,25 @@ export default function ChatWithUs(){
     const closeChat = () => {
         setShowChat(false)
     }
+    if( !loginStatus || role == 'admin')
+        return <>
+        </>
     return <>
     {
         showChat ?(<>
-            <MDBContainer className='flex-column message-box'>
+            <MDBContainer className='d-flex flex-column message-box'>
                 <div className='navbar-wrapper'>
                     <Navbar className='bg-transparent'
                         // left={<div>Logo</div>}
                         center={<div className='title'>{'Admin'}</div>}
                         right={<MDBIcon fas icon="x"  onClick = {closeChat} className='x'/>}
-                        type="light"
                     />
 
                 </div>
-                {/* {
-                    messageList.map(message =>{
-                        return<>
-                            <ChatItem />
-                        </>
-                    }
-                    )
-                } */}
-                <MessageList
-                className='message-list'
-                lockable={true}
-                toBottomHeight={'100%'}
-                dataSource={messageList}
-                />
+                <CustomMessageList  messageList={messageList}/>
                 <Input
                 className='chat-input'
                 placeholder="Type here..."
-                multiline={true}
                 rightButtons={<Button className='send-button' text='send' onClick={()=> handleChatInput()} title ='Send'/>}
                 />
             </MDBContainer>
@@ -86,7 +78,7 @@ export default function ChatWithUs(){
             <>
                 <div onClick = {handleClick} 
                     className = 'chat-with-us-wrapper' 
-                    style = {{position: 'fixed', zIndex: '2', borderRadius: '20px', display: 'flex', background: 'grey', right: '20px', bottom: '24px'}}>
+                >
                     <div style = {{padding:'16px', color: 'white', display: 'flex', gap: '5px', alignItems: 'center', fontWeight: 'bold'}}>
                         <MDBIcon fas icon="message" />
                         <span>Chat With Us</span>

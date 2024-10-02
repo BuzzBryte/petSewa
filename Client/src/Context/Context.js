@@ -2,12 +2,14 @@ import React, { createContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { axios } from '../Utils/Axios';
 import toast from 'react-hot-toast';
+import io from 'socket.io-client'
 
 const PetContext = createContext();
 
 const PetProvider = ({ children }) => {
   const userID = localStorage.getItem('userID');
   const [products, setProducts] = useState([]);
+  const [socket, setSocket] = useState(null)
   const [loginStatus, setLoginStatus] = useState(userID ? true : false);
   const [cart, setCart] = useState([]);
   const [wishlist, setWishlist] = useState([]);
@@ -25,6 +27,12 @@ const PetProvider = ({ children }) => {
       }
     };
     fetchData();
+
+    const newSocket = io(process.env.REACT_APP_BACKEND_BASE_URL)
+    setSocket(newSocket);
+    return () => {
+      newSocket.disconnect()
+    }
   }, []);
 
   ////////////////////// Pet Type Functions /////////////////////////////
@@ -189,6 +197,7 @@ const PetProvider = ({ children }) => {
   return (
     <PetContext.Provider
       value={{
+        socket,
         products,
         fetchProductDetails,
         fetchFood,

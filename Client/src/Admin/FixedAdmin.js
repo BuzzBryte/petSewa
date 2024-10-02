@@ -28,6 +28,9 @@ export default function Dashboard() {
   const name = localStorage.getItem('name');
   const role = localStorage.getItem('role');
   
+  if ( !role || role != 'admin' ){
+    navigate('/admin/login')
+  }
   return (
     <div className="admin-dashboard">
       {role === 'admin' ? (
