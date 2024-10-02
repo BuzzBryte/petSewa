@@ -17,7 +17,8 @@ import Wishlist from './Pages/Wishlist';
 import Footer from './Components/Footer';
 import FixedAdmin from './Admin/FixedAdmin';
 import SuccessPayment from './Pages/SuccessPayment';
-
+import Appointments from './Pages/Appointments';
+import BookAppointment from './Pages/BookAppointment'
 function App() {
   // Check if the current route is within the admin dashboard
   const location = useLocation();
@@ -28,12 +29,14 @@ function App() {
       <PetProvider>
         {/* Navbar & Footer is common for every route except Dashboard */}
         {!isDashboardRoute && <Navbar />}
-        <Toaster />
+        {/* <Toaster /> */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/registration" element={<Registration />} />
           <Route path="/login" element={<Login />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path = '/appointments' element = {<Appointments />} />
+          <Route path = '/bootAppointments' element = {<BookAppointment />} />
           <Route path="/dog-food" element={<DogFood />} />
           {/* <Route path="/cat-food" element={<CatFood />} /> */}
           <Route path="/food" element={<Food />} />
@@ -51,6 +54,7 @@ function App() {
           <Route path="/dashboard/products" element={<FixedAdmin />} />
           <Route path="/dashboard/products/:id" element={<FixedAdmin />} />
           <Route path="/dashboard/add-products" element={<FixedAdmin />} />
+          <Route path='/dashboard/chat' element={<FixedAdmin />} />
         </Routes>
         {!isDashboardRoute && <Footer />}
       </PetProvider>

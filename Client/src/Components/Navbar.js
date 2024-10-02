@@ -144,6 +144,8 @@ const Navbar = () => {
                           <hr />
                           <li onClick={() => navigate('/wishlist')}>Wishlist</li>
                           <hr />
+                          <li onClick={() => navigate('/appointments')}>Appointments</li>
+                          <hr />
                           <li
                             onClick={() => {
                               setLoginStatus(false);

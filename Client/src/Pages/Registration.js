@@ -21,6 +21,7 @@ function Registration() {
 
     try {
       const userData = { name, email, password };
+      console.log(userData)
       const response = await axios.post('http://localhost:5000/api/users/register', userData);
       toast.success(response.data.message);
       navigate('/login');

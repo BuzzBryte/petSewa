@@ -17,7 +17,7 @@ const PetProvider = ({ children }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('/api/users/products');
+        const response = await axios.get('http://localhost:5000/api/users/products');
         setProducts(response.data.data);
       } catch (error) {
         toast.error(error.response.data.message);
@@ -61,7 +61,7 @@ const PetProvider = ({ children }) => {
 
   const fetchProductDetails = async (id) => {
     try {
-      const response = await axios.get(`/api/users/products/${id}`);
+      const response = await axios.get(`http://localhost:5000/api/users/products/${id}`);
       return response.data.data;
     } catch (error) {
       toast.error(error.response.data.message);
@@ -70,7 +70,7 @@ const PetProvider = ({ children }) => {
 
   const fetchCart = async () => {
     try {
-      const response = await axios.get(`/api/users/${userID}/cart`);
+      const response = await axios.get(`http://localhost:5000/api/users/${userID}/cart`);
       setCart(response.data.data);
     } catch (error) {
       toast.error(error.response.data.message);
@@ -79,8 +79,8 @@ const PetProvider = ({ children }) => {
 
   const addToCart = async (productID) => {
     try {
-      await axios.post(`/api/users/${userID}/cart`, { productID });
-      const response = await axios.get(`/api/users/${userID}/cart`);
+      await axios.post(`http://localhost:5000/api/users/${userID}/cart`, { productID });
+      const response = await axios.get(`http://localhost:5000/api/users/${userID}/cart`);
       setCart(response.data.data);
       toast.success('Added to cart');
     } catch (error) {
@@ -90,8 +90,8 @@ const PetProvider = ({ children }) => {
 
   const removeFromCart = async (productID) => {
     try {
-      await axios.delete(`/api/users/${userID}/cart/${productID}`);
-      const response = await axios.get(`/api/users/${userID}/cart`);
+      await axios.delete(`http://localhost:5000/api/users/${userID}/cart/${productID}`);
+      const response = await axios.get(`http://localhost:5000/api/users/${userID}/cart`);
       setCart(response.data.data);
       toast.success('Removed from cart');
     } catch (error) {
@@ -102,7 +102,7 @@ const PetProvider = ({ children }) => {
   const handleQuantity = async (cartID, quantityChange) => {
     const data = { id: cartID, quantityChange };
     try {
-      await axios.put(`/api/users/${userID}/cart`, data);
+      await axios.put(`http://localhost:5000/api/users/${userID}/cart`, data);
     } catch (error) {
       toast.error(error.response.data.message);
     }
@@ -111,7 +111,7 @@ const PetProvider = ({ children }) => {
   const fetchWishlist = async () => {
     try {
       if (loginStatus) {
-        const response = await axios.get(`/api/users/${userID}/wishlist`);
+        const response = await axios.get(`http://localhost:5000/api/users/${userID}/wishlist`);
         setWishlist(response.data.data);
       }
     } catch (error) {
@@ -121,8 +121,8 @@ const PetProvider = ({ children }) => {
 
   const addToWishlist = async (productID) => {
     try {
-      await axios.post(`/api/users/${userID}/wishlist`, { productID });
-      const response = await axios.get(`/api/users/${userID}/wishlist`);
+      await axios.post(`http://localhost:5000/api/users/${userID}/wishlist`, { productID });
+      const response = await axios.get(`http://localhost:5000/api/users/${userID}/wishlist`);
       toast.success('Added to wishlist');
       setWishlist(response.data.data);
     } catch (error) {
@@ -132,8 +132,8 @@ const PetProvider = ({ children }) => {
 
   const removeFromWishlist = async (productID) => {
     try {
-      await axios.delete(`/api/users/${userID}/wishlist/${productID}`);
-      const response = await axios.get(`/api/users/${userID}/wishlist`);
+      await axios.delete(`http://localhost:5000/api/users/${userID}/wishlist/${productID}`);
+      const response = await axios.get(`http://localhost:5000/api/users/${userID}/wishlist`);
       toast.success('Removed from wishlist');
       setWishlist(response.data.data);
     } catch (error) {
@@ -147,7 +147,7 @@ const PetProvider = ({ children }) => {
 
   const handleCheckout = async () => {
     try {
-      const response = await axios.post(`/api/users/${userID}/payment`);
+      const response = await axios.post(`http://localhost:5000/api/users/${userID}/payment`);
       const url = response.data.url;
       const confirmation = window.confirm('You are being redirected to the Stripe payment gateway. Continue?');
       if (confirmation) window.location.replace(url);
@@ -158,7 +158,7 @@ const PetProvider = ({ children }) => {
 
   const fetchPaymentStatus = async () => {
     try {
-      await axios.get(`/api/users/payment/success`);
+      await axios.get(`http://localhost:5000/api/users/payment/success`);
       setCart([]);
       setTimeout(() => {
         navigate('/');

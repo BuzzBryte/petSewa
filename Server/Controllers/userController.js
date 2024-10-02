@@ -1,6 +1,7 @@
 const { User, userRegisterSchema, userLoginSchema } = require('../Models/userSchema');
 const { Product } = require('../Models/productSchema');
 const Order = require('../Models/orderSchema');
+const {Appointment} = require('../Models/appointmentSchema')
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
@@ -55,7 +56,7 @@ module.exports = {
         sameSite: 'none',
         path: '/',
         maxAge: 3 * 24 * 60 * 60 * 1000,
-      })
+      }) 
       .json({
         status: 'success',
         message: 'Successfully Logged In.',
@@ -349,4 +350,72 @@ module.exports = {
       data: orderDetails,
     });
   },
+
+  addAppointment: async (req, res) => {
+    const {appointment} = req.body
+    const savedAppointment = await Appointment.create(appointment)
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Appointment added successfully',
+      data: savedAppointment
+    })
+  },
+
+  cancelAppointment: async (req, res) => {
+      const { appointmentId } = req.params; // Assuming appointmentId is passed as a URL parameter
+  
+      const appointment = await Appointment.findById(appointmentId);
+  
+      if (!appointment) {
+        return res.status(404).json({
+          status: 'fail',
+          message: 'Appointment not found',
+        });
+      }
+  
+      // Update the status to 'Cancelled'
+      appointment.status = 'Cancelled';
+      await appointment.save();
+  
+      res.status(200).json({
+        status: 'success',
+        message: 'Appointment cancelled successfully',
+        data: appointment,
+      });
+
+  },
+
+
+  getAppointments: async (req, res) => {
+    const appointments = await Appointment.find();
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Appointments retrieved successfully',
+      data: appointments,
+    });
+
+  },
+
+  getAppointmentsByUserId: async (req, res) => {
+    const { userId } = req.params; // Assuming userId is passed as a URL parameter
+
+    const appointments = await Appointment.find({ customer: userId });
+
+    if (!appointments.length) {
+      return res.status(404).json({
+        status: 'fail',
+        message: 'No appointments found for this user',
+      });
+    }
+
+    res.status(200).json({
+      status: 'success',
+      message: 'Appointments retrieved successfully',
+      data: appointments,
+    });
+  },
+
+
 };

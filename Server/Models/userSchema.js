@@ -6,6 +6,15 @@ const userSchema = new mongoose.Schema({
   username: { type: String, default: null },
   email: String,
   password: String,
+  messageList: [
+    {
+      position: String,
+      type: { type: String, default: 'text'},
+      isRead: Boolean,
+      date: mongoose.Schema.Types.Date
+
+    }
+  ],
   cart: [
     {
       product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
