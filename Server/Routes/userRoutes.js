@@ -28,6 +28,10 @@ router
   .post('/:id/wishlist', tryCatch(controller.addToWishlist))
   .delete('/:id/wishlist/:product', tryCatch(controller.removeFromWishlist))
 
-  .get('/:id/orders', tryCatch(controller.showOrders));
+  .get('/:id/orders', tryCatch(controller.showOrders))
 
+  // add appointments
+  .post('/addAppointment', tryCatch(controller.addAppointment))
+  .get('/getAppointments', tryCatch(controller.getAppointments))
+  .get('/getAppointmentsByUserId/:userId', tryCatch(controller.getAppointmentsByUserId));
 module.exports = router;
