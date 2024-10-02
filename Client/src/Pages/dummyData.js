@@ -17,7 +17,7 @@ export const categories = [
   {
     name: 'Subscription',
     imageUrl: 'https://media.istockphoto.com/id/1416706304/photo/pet-dog-enjoying-a-subscription-box-of-toys.jpg?s=170667a&w=is&k=20&c=-GhWR23MnN2R6-gSPyxmUXOR22O0eqZfCJBn3SBa4Kw=',
-    path: '/subscription',
+    path: '/subscriptionProducts',
   },
 ];
 

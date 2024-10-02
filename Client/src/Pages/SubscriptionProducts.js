@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import ProductList from '../Components/ProductList';
 import { PetContext } from '../Context/Context';
 
-export default function Subscription() {
+export default function SubscriptionProducts() {
   const { fetchSubscription } = useContext(PetContext);
   const [Subscription, setSubscription] = useState([]);
 
