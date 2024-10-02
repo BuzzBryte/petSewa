@@ -10,7 +10,7 @@ import Login from './Pages/Login';
 import Cart from './Pages/Cart';
 import Orders from './Pages/Orders';
 import DogFood from './Pages/DogFood';
-import CatFood from './Pages/CatFood';
+import Food from './Pages/Food';
 import Details from './Pages/Details';
 import Wishlist from './Pages/Wishlist';
 import Footer from './Components/Footer';
@@ -35,7 +35,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/dog-food" element={<DogFood />} />
           {/* <Route path="/cat-food" element={<CatFood />} /> */}
-          <Route path="/food" element={<CatFood />} />
+          <Route path="/food" element={<Food />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/products" element={<AllProducts />} />
           <Route path="/products/:id" element={<Details />} />

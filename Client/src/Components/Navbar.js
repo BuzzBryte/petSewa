@@ -63,12 +63,12 @@ const Navbar = () => {
             <MDBNavbarNav className="navbar-links">
               <MDBNavbarLink onClick={() => handleNavigation('/')}>Home</MDBNavbarLink>
               <MDBNavbarLink onClick={() => handleNavigation('/products')}>Products</MDBNavbarLink>
-              <MDBNavbarLink onClick={() => handleNavigation('/cat-food')} className="nav-food">
+              {/* <MDBNavbarLink onClick={() => handleNavigation('/cat-food')} className="nav-food">
                 Cat Food
               </MDBNavbarLink>
               <MDBNavbarLink onClick={() => handleNavigation('/dog-food')} className="nav-food">
                 Dog Food
-              </MDBNavbarLink>
+              </MDBNavbarLink> */}
             </MDBNavbarNav>
           </MDBCollapse>
 

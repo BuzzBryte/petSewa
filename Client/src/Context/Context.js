@@ -38,7 +38,7 @@ const PetProvider = ({ children }) => {
   };
   ////////////////////////////////////////////////////////////////////////
 
-  const fetchCatFood = async () => {
+  const fetchFood = async () => {
     try {
       const response = await axios.get(`http://localhost:5000/api/users/products/category/${selectedPetType}/food`);
       return response.data.data;
@@ -174,7 +174,7 @@ const PetProvider = ({ children }) => {
       value={{
         products,
         fetchProductDetails,
-        fetchCatFood,
+        fetchFood,
         fetchDogFood,
         fetchCart,
         addToCart,

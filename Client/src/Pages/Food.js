@@ -2,18 +2,18 @@ import React, { useState, useEffect, useContext } from 'react';
 import ProductList from '../Components/ProductList';
 import { PetContext } from '../Context/Context';
 
-export default function CatFood() {
-  const { fetchCatFood } = useContext(PetContext);
-  const [catFood, setCatFood] = useState([]);
+export default function Food() {
+  const { fetchFood } = useContext(PetContext);
+  const [Food, setFood] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const products = await fetchCatFood();
-      setCatFood(products);
+      const products = await fetchFood();
+      setFood(products);
     };
 
     fetchData();
-  }, [fetchCatFood]);
+  }, [fetchFood]);
 
   return (
     <>
@@ -22,7 +22,7 @@ export default function CatFood() {
           <span>Cat</span> Food
         </h1>
 
-        <ProductList products={catFood} />
+        <ProductList products={Food} />
       </section>
     </>
   );
