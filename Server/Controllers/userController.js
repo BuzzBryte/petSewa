@@ -1,4 +1,5 @@
 const { User, userRegisterSchema, userLoginSchema } = require('../Models/userSchema');
+require('dotenv').config();
 const { Product } = require('../Models/productSchema');
 const Order = require('../Models/orderSchema');
 const {Appointment} = require('../Models/appointmentSchema')
@@ -255,24 +256,98 @@ module.exports = {
     });
   },
 
-  payment: async (req, res) => {
-    console.log("hhh")
+  // payment: async (req, res) => {
+  //   console.log("hhh", process.env.STRIPE_SECRET_KEY)
+  //   const userID = req.params.id;
+  //   console.log(userID)
+  //   const user = await User.findById(userID).populate('cart.product');
+  //   console.log(user)
+  //   if (!user) {
+  //     return res.status(404).json({ message: 'User not found' });
+  //   }
+    
+  //   if (user.cart.length === 0) {
+  //     return res.status(404).json({ message: 'Cart is empty' });
+  //   }
+
+
+  //   const line_items = user.cart.map((item) => {
+  //     return {
+  //       price_data: {
+  //         currency: 'inr',
+  //         product_data: {
+  //           images: [item.product.image],
+  //           name: item.product.title,
+  //         },
+  //         unit_amount: Math.round(item.product.price * 100),
+  //       },
+  //       quantity: item.quantity,
+  //     };
+  //   });
+
+  //   console.log(line_items, "line items")
+
+  //   const session = await stripe.checkout.sessions.create({
+  //     line_items,
+  //     mode: 'payment',
+  //     success_url: 'http://localhost:3000/payment/success',
+  //     cancel_url: 'http://localhost:3000/payment/cancel',
+  //   });
+  //   console.log(session, "session")
+
+  //   orderDetails = {
+  //     userID,
+  //     user,
+  //     newOrder: {
+  //       products: user.cart.map((item) => new mongoose.Types.ObjectId(item.product._id)),
+  //       order_id: Date.now(),
+  //       payment_id: session.id,
+  //       total_amount: session.amount_total / 100,
+  //     },
+  //   };
+
+  //   console.log(orderDetails, "details")
+
+  //   res.status(200).json({
+  //     status: 'success',
+  //     message: 'Stripe Checkout session created',
+  //     sessionId: session.id,
+  //     url: session.url,
+  //   });
+  // },
+ 
+// Assuming you're using Express.js
+payment: async (req, res) => {
+  try {
+    console.log("Stripe Secret Key:", process.env.STRIPE_SECRET_KEY);
+
     const userID = req.params.id;
+    console.log("User ID:", userID);
+
     const user = await User.findById(userID).populate('cart.product');
+    console.log("Retrieved User:", user);
+
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-    
+
     if (user.cart.length === 0) {
-      return res.status(404).json({ message: 'Cart is empty' });
+      return res.status(400).json({ message: 'Cart is empty' });
     }
 
     const line_items = user.cart.map((item) => {
+      if (!item.product || !item.product.price || !item.product.title || !item.product.image) {
+        throw new Error(`Invalid product data for item ID: ${item._id}`);
+      }
+
+      // Validate and sanitize image URL (Check length and provide fallback if needed)
+      const imageUrl = item.product.image.length <= 2048 ? item.product.image : 'https://yourdomain.com/default-product-image.jpg';
+
       return {
         price_data: {
           currency: 'inr',
           product_data: {
-            images: [item.product.image],
+            images: [imageUrl],
             name: item.product.title,
           },
           unit_amount: Math.round(item.product.price * 100),
@@ -281,31 +356,61 @@ module.exports = {
       };
     });
 
+    console.log("Line Items:", line_items);
+
     const session = await stripe.checkout.sessions.create({
-      line_items,
+      payment_method_types: ['card'],
+      line_items: line_items,
       mode: 'payment',
-      success_url: 'http://localhost:3000/payment/success',
+      success_url: 'http://localhost:3000/payment/success?session_id={CHECKOUT_SESSION_ID}',
       cancel_url: 'http://localhost:3000/payment/cancel',
     });
 
-    orderDetails = {
+    console.log("Stripe Session:", session);
+
+    const orderDetails = {
       userID,
-      user,
+      user: {
+        id: user._id,
+        email: user.email,
+      },
       newOrder: {
-        products: user.cart.map((item) => new mongoose.Types.ObjectId(item.product._id)),
-        order_id: Date.now(),
+        products: user.cart.map((item) => item.product._id),
+        order_id: new mongoose.Types.ObjectId(),
         payment_id: session.id,
         total_amount: session.amount_total / 100,
+        created_at: new Date(),
       },
     };
 
-    res.status(200).json({
+    console.log("Order Details:", orderDetails);
+
+    return res.status(200).json({
       status: 'success',
       message: 'Stripe Checkout session created',
       sessionId: session.id,
       url: session.url,
     });
-  },
+
+  } catch (error) {
+    console.error("Payment Processing Error:", error);
+
+    if (error.type === 'StripeCardError') {
+      return res.status(400).json({ message: error.message });
+    } else if (error.type === 'StripeInvalidRequestError') {
+      return res.status(400).json({ message: 'Invalid payment parameters.' });
+    } else if (error.type === 'StripeAPIError') {
+      return res.status(500).json({ message: 'Payment processing failed. Please try again later.' });
+    } else if (error.type === 'StripeConnectionError') {
+      return res.status(502).json({ message: 'Network error. Please try again.' });
+    } else if (error.type === 'StripeAuthenticationError') {
+      return res.status(401).json({ message: 'Authentication with payment gateway failed.' });
+    } else {
+      return res.status(500).json({ message: 'An unexpected error occurred.' });
+    }
+  }
+},
+
 
   success: async (req, res) => {
     const { userID, user, newOrder } = orderDetails;
