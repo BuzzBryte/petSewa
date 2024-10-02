@@ -2,6 +2,7 @@ const { User, userRegisterSchema, userLoginSchema } = require('../Models/userSch
 const { Product } = require('../Models/productSchema');
 const Order = require('../Models/orderSchema');
 const {Appointment} = require('../Models/appointmentSchema')
+const {Subscription} = require('../Models/subscriptionSchema')
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
@@ -351,6 +352,8 @@ module.exports = {
     });
   },
 
+
+  // appointments controller
   addAppointment: async (req, res) => {
     const {appointment} = req.body
     console.log(appointment)
@@ -417,6 +420,58 @@ module.exports = {
       data: appointments,
     });
   },
+
+  // subscription controller
+
+
+// Create a new subscription
+// router.post('/subscriptions', async (req, res) => {
+  createSubscription: async(req, res) => {
+    const subscription = new Subscription(req.body);
+    await subscription.save();
+    res.status(200).json(subscription);
+  },
+
+// Get all subscriptions for a user
+// router.get('/subscriptions/:userId', async (req, res) => {
+  getSubscriptionByUserId: async (req, res) => {
+      const subscriptions = await Subscription.find({ user_id: req.params.userId });
+      res.status(200).json(subscriptions);
+  },
+
+// Get a specific subscription
+// router.get('/subscriptions/:subscriptionId', async (req, res) => {
+  getSubscriptionById: async( req, res) => {   
+
+    const subscription = await Subscription.findById(req.params.subscriptionId);
+    if (!subscription) {
+      return res.status(404).json({ error: 'Subscription not found' });
+    }
+    res.json(subscription);
+    
+  },
+
+// Update a subscription
+
+// router.put('/subscriptions/:subscriptionId', async (req, res) => {
+  updateSubscription: async (req, res) => {
+    const subscription = await Subscription.findByIdAndUpdate(req.params.subscriptionId, req.body, { new: true });
+    if (!subscription) {
+      return res.status(404).json({ error: 'Subscription not found' });
+    }
+    res.json(subscription);
+    res.status(400).json({ error: err.message });
+  },
+
+// Delete a subscription
+// router.delete('/subscriptions/:subscriptionId', async (req, res) => {
+  deleteSubscription: async(req, res) =>{
+    const subscription = await Subscription.findByIdAndDelete(req.params.subscriptionId);
+    if (!subscription) {
+      return res.status(404).json({ error: 'Subscription not found' });
+    }
+
+  }
 
 
 };
