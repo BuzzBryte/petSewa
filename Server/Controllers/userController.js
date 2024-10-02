@@ -257,6 +257,7 @@ module.exports = {
   },
 
   payment: async (req, res) => {
+    console.log("hhh")
     const userID = req.params.id;
     const user = await User.findById(userID).populate('cart.product');
     if (!user) {
