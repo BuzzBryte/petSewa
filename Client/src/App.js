@@ -19,6 +19,8 @@ import FixedAdmin from './Admin/FixedAdmin';
 import SuccessPayment from './Pages/SuccessPayment';
 import Appointments from './Pages/Appointments';
 import BookAppointment from './Pages/BookAppointment'
+import Accessories from './Pages/Accessories';
+import Subscription from './Pages/Subscription';
 function App() {
   // Check if the current route is within the admin dashboard
   const location = useLocation();
@@ -40,6 +42,8 @@ function App() {
           <Route path="/dog-food" element={<DogFood />} />
           {/* <Route path="/cat-food" element={<CatFood />} /> */}
           <Route path="/food" element={<Food />} />
+          <Route path="/accessories" element={<Accessories />} />
+          <Route path="/subscription" element={<Subscription />} />
           <Route path="/toys" element={<Toy/>} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/products" element={<AllProducts />} />
