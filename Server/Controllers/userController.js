@@ -427,17 +427,38 @@ module.exports = {
 
 // Create a new subscription
 // router.post('/subscriptions', async (req, res) => {
-  createSubscription: async(req, res) => {
-    const subscription = new Subscription(req.body);
-    await subscription.save();
-    res.status(200).json(subscription);
+  addSubscription: async(req, res) => {
+    const intervals= {
+      'weekly': 7,
+      'biweekly': 14,
+      'monthly': 30
+    }
+    const subscription = req.body.subscription;
+    const daysToAdd = intervals[subscription.interval]
+    const nextDate = new Date(subscription.startDate) 
+    nextDate.setDate(nextDate.getDate() + daysToAdd)
+    const newsubscriptionObject = {
+      ...subscription,
+      nextOrderDate: nextDate 
+    }
+
+    const savedSubscription = await Subscription.create(newsubscriptionObject);
+    res.status(200).json({
+      status: 'success',
+      message: 'Subscription added successfully',
+      data: savedSubscription,
+    });
   },
 
 // Get all subscriptions for a user
 // router.get('/subscriptions/:userId', async (req, res) => {
   getSubscriptionByUserId: async (req, res) => {
-      const subscriptions = await Subscription.find({ user_id: req.params.userId });
-      res.status(200).json(subscriptions);
+      const subscriptions = await Subscription.find({ user: req.params.userId }).populate('product');
+      res.status(200).json({
+        status: 'success',
+        message: 'Appointments retrieved successfully',
+        data: subscriptions,
+      });
   },
 
 // Get a specific subscription

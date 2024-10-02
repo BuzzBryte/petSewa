@@ -16,8 +16,13 @@ const subscriptionSchema = new mongoose.Schema({
     enum: ['weekly', 'biweekly', 'monthly'],
     required: true
   },
-  next_order_date: {
+  startDate: {
     type: Date,
+    required: true
+  },
+  nextOrderDate: {
+    type: Date,
+    required: true
   },
   status: {
     type: String,
