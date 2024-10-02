@@ -32,6 +32,7 @@ export default function Details() {
           <h4 className="fw-bold mb-3">₹{item.price}</h4>
           <hr />
           <p className="mt-3 text-muted mb-4">{item.description}</p>
+          <h1>{item.interval}</h1>
           <div className="d-flex align-items-center gap-3">
             <div>
               {cart?.some((value) => value.product._id === id) ? (

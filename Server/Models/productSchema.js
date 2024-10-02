@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
 
+// Mongoose Schema for Products
 const productSchema = new mongoose.Schema({
   title: String,
   description: String,
@@ -8,8 +9,16 @@ const productSchema = new mongoose.Schema({
   image: String,
   petType: String,
   category: String,
+  interval: {
+    type: String,
+    enum: ['weekly', 'biweekly', 'monthly'],
+    required: function () {
+      return this.category === 'subscriptions'; // Only required for subscriptions
+    }
+  }
 });
 
+// Joi Validation Schema for Product
 const productValidationSchema = Joi.object({
   id: Joi.string(),
   title: Joi.string().min(3).required(),
@@ -18,6 +27,13 @@ const productValidationSchema = Joi.object({
   image: Joi.string().required(),
   petType: Joi.string().required(),
   category: Joi.string().min(3).max(20).required(),
+  interval: Joi.string()
+    .valid('weekly', 'biweekly', 'monthly')
+    .when('category', {
+      is: 'subscriptions',
+      then: Joi.required(),
+      otherwise: Joi.forbidden(), // If the category is not 'subscriptions', interval should be omitted
+    }),
 });
 
 const Product = mongoose.model('Product', productSchema);
