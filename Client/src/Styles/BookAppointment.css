@@ -68,4 +68,31 @@
     margin-top: 1rem;
     color: green;
   }
+  .not-logged-in-message {
+    text-align: center;
+    background-color: #ffe6e6;
+    padding: 2rem;
+    border-radius: 10px;
+    margin-top: 2rem;
+  }
+  
+  .not-logged-in-message h2 {
+    font-size: 1.8rem;
+    color: #e74c3c;
+  }
+  
+  .not-logged-in-message p {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+  }
+  
+  .not-logged-in-message a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .not-logged-in-message a:hover {
+    text-decoration: underline;
+  }
   

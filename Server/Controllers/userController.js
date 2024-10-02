@@ -353,6 +353,7 @@ module.exports = {
 
   addAppointment: async (req, res) => {
     const {appointment} = req.body
+    console.log(appointment)
     const savedAppointment = await Appointment.create(appointment)
 
     res.status(200).json({

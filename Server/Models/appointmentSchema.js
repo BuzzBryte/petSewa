@@ -6,15 +6,22 @@ const AppointmentSchema = new mongoose.Schema({
     ref: 'User', // Assuming you have a customer schema
     required: true,
   },
+  petName: {
+    type: String
+  },
+  petType: {
+    type: String
+  },
   serviceType: {
     type: String,
     enum: ['Grooming', 'Bathing', 'Nail Trimming'], // Add more services as needed
     required: true,
-  },
-  appointmentTime: {
+  }, 
+  appointmentDateAndTime: {
     type: Date,
     required: true,
   },
+
   status: {
     type: String,
     enum: ['Scheduled', 'Completed', 'Cancelled'],
