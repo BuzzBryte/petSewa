@@ -11,6 +11,7 @@ const PetProvider = ({ children }) => {
   const [loginStatus, setLoginStatus] = useState(userID ? true : false);
   const [cart, setCart] = useState([]);
   const [wishlist, setWishlist] = useState([]);
+  const [selectedPetType, setSelectedPetType] = useState(null); // New state for pet type
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,12 +26,27 @@ const PetProvider = ({ children }) => {
     fetchData();
   }, []);
 
-  const fetchCatFood = async () => {
+  ////////////////////// Pet Type Functions /////////////////////////////
+  // Function to set the selected pet type
+  const selectPetType = (petType) => {
+    setSelectedPetType(petType);
+  };
+
+  // Function to reset the pet type (optional)
+  const resetPetType = () => {
+    setSelectedPetType(null);
+  };
+  ////////////////////////////////////////////////////////////////////////
+
+  const fetchFood = async () => {
     try {
-      const response = await axios.get('/api/users/products/category/Cat');
+      const response = await axios.get(`http://localhost:5000/api/users/products/category/${selectedPetType}/food`);
       return response.data.data;
     } catch (error) {
-      toast.error(error.response.data.message);
+      const errorMessage = error.response && error.response.data && error.response.data.message 
+        ? error.response.data.message 
+        : 'An error occurred';
+      toast.error(errorMessage);
     }
   };
 
@@ -72,7 +88,6 @@ const PetProvider = ({ children }) => {
     }
   };
 
-  // Remove an item from the cart
   const removeFromCart = async (productID) => {
     try {
       await axios.delete(`/api/users/${userID}/cart/${productID}`);
@@ -84,7 +99,6 @@ const PetProvider = ({ children }) => {
     }
   };
 
-  // Handle changes in item quantity
   const handleQuantity = async (cartID, quantityChange) => {
     const data = { id: cartID, quantityChange };
     try {
@@ -127,13 +141,10 @@ const PetProvider = ({ children }) => {
     }
   };
 
-  // Function to format a price (₹1,000, ₹10,000)
   const handlePrice = (price) => `₹${Number(price).toLocaleString('en-IN')}`;
 
-  //  Calculate the total price of items in the cart
   const totalPrice = cart?.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
 
-  // Handle the checkout process
   const handleCheckout = async () => {
     try {
       const response = await axios.post(`/api/users/${userID}/payment`);
@@ -163,7 +174,7 @@ const PetProvider = ({ children }) => {
       value={{
         products,
         fetchProductDetails,
-        fetchCatFood,
+        fetchFood,
         fetchDogFood,
         fetchCart,
         addToCart,
@@ -180,6 +191,9 @@ const PetProvider = ({ children }) => {
         totalPrice,
         handleCheckout,
         fetchPaymentStatus,
+        selectedPetType, // Providing pet type in context
+        selectPetType,   // Function to select pet type
+        resetPetType     // Function to reset pet type
       }}
     >
       {children}

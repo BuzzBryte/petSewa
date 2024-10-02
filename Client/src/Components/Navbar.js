@@ -57,18 +57,18 @@ const Navbar = () => {
             <MDBIcon icon="bars" fas />
           </MDBNavbarToggler>
           <h1 className="logo" onClick={() => navigate('/')}>
-            Kitter
+            PetSewa
           </h1>
           <MDBCollapse navbar show={showCollapse} id="navbarCollapse">
             <MDBNavbarNav className="navbar-links">
               <MDBNavbarLink onClick={() => handleNavigation('/')}>Home</MDBNavbarLink>
               <MDBNavbarLink onClick={() => handleNavigation('/products')}>Products</MDBNavbarLink>
-              <MDBNavbarLink onClick={() => handleNavigation('/cat-food')} className="nav-food">
+              {/* <MDBNavbarLink onClick={() => handleNavigation('/cat-food')} className="nav-food">
                 Cat Food
               </MDBNavbarLink>
               <MDBNavbarLink onClick={() => handleNavigation('/dog-food')} className="nav-food">
                 Dog Food
-              </MDBNavbarLink>
+              </MDBNavbarLink> */}
             </MDBNavbarNav>
           </MDBCollapse>
 
