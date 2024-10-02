@@ -2,27 +2,27 @@ import React, { useState, useEffect, useContext } from 'react';
 import ProductList from '../Components/ProductList';
 import { PetContext } from '../Context/Context';
 
-export default function Food() {
-  const { fetchFood } = useContext(PetContext);
-  const [Food, setFood] = useState([]);
+export default function Subscription() {
+  const { fetchSubscription } = useContext(PetContext);
+  const [Subscription, setSubscription] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const products = await fetchFood();
-      setFood(products);
+      const products = await fetchSubscription();
+      setSubscription(products);
     };
 
     fetchData();
-  }, [fetchFood]);
+  }, [fetchSubscription]);
 
   return (
     <>
       <section className="products d-flex flex-column align-items-center mb-5" style={{ paddingTop: '80px' }}>
         <h1 className="mt-5 text-black fw-bolder">
-           Food
+        Subscription
         </h1>
-
-        <ProductList products={Food} />
+    {Subscription ? <ProductList products={Subscription} /> : <h1>No Inventory</h1>}
+       
       </section>
     </>
   );

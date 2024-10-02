@@ -11,7 +11,7 @@ const PetProvider = ({ children }) => {
   const [loginStatus, setLoginStatus] = useState(userID ? true : false);
   const [cart, setCart] = useState([]);
   const [wishlist, setWishlist] = useState([]);
-  const [selectedPetType, setSelectedPetType] = useState(null); // New state for pet type
+  const [selectedPetType, setSelectedPetType] = useState('dog'); // New state for pet type
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -50,9 +50,25 @@ const PetProvider = ({ children }) => {
     }
   };
 
-  const fetchDogFood = async () => {
+  const fetchToy = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/users/products/category/Dog');
+      const response = await axios.get(`http://localhost:5000/api/users/products/category/${selectedPetType}/toys`);
+      return response.data.data;
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  };
+  const fetchAccessories = async () => {
+    try {
+      const response = await axios.get(`http://localhost:5000/api/users/products/category/${selectedPetType}/accessories`);
+      return response.data.data;
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
+  };
+  const fetchSubscription = async () => {
+    try {
+      const response = await axios.get(`http://localhost:5000/api/users/products/category/${selectedPetType}/subscriptions`);
       return response.data.data;
     } catch (error) {
       toast.error(error.response.data.message);
@@ -175,7 +191,9 @@ const PetProvider = ({ children }) => {
         products,
         fetchProductDetails,
         fetchFood,
-        fetchDogFood,
+        fetchToy,
+        fetchAccessories,
+        fetchSubscription,
         fetchCart,
         addToCart,
         removeFromCart,
