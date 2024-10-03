@@ -5,8 +5,7 @@ export default function CustomMessageList({messageList, adminPosition='left'}){
     <div className='message-container'>
         {
             messageList.map(message =>{
-                return<>
-                    <div className={`message-item ${message.position == 'right'?'flex-row-reverse': ''}`}>
+                return<div key = {message._id} className={`message-item ${message.position == 'right'?'flex-row-reverse': ''}`}>
                         <Avatar 
                             className ='avatar'
                             src = {`${ message.position == adminPosition ?
@@ -26,7 +25,6 @@ export default function CustomMessageList({messageList, adminPosition='left'}){
 
                         />
                     </div>
-                </>
             }
             )
         }

@@ -18,7 +18,6 @@ function Login() {
     const email = e.target.email.value.trim().toLowerCase();
     const password = e.target.password.value;
     const loginData = { email, password };
-    const adminEmail = process.env.REACT_APP_ADMIN_EMAIL;
     const isAdminLogin = location.pathname.startsWith('/admin/login')
     if (!email || !password) {
       return toast.error('Enter All the Inputs');
@@ -27,10 +26,15 @@ function Login() {
     const endpoint = isAdminLogin ? '/api/admin/login' : '/api/users/login';
 
     try {
+      console.log(endpoint)
       const response = await axios.post(endpoint, loginData);
-      isAdminLogin
-        ? localStorage.setItem('role', 'admin')
-        : localStorage.setItem('userID', response.data.data.userID);
+      if(isAdminLogin){
+        localStorage.setItem('role', 'admin')
+        localStorage.setItem('adminID', response.data.data._id )
+      }else{
+        localStorage.setItem('role', 'user')
+        localStorage.setItem('userID', response.data.data._id )
+      }
 
       localStorage.setItem('name', response.data.data.name);
       localStorage.setItem('jwt_token', response.data.data.jwt_token);
@@ -38,7 +42,7 @@ function Login() {
       setLoginStatus(true);
       navigate(isAdminLogin ? '/dashboard' : '/');
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error);
     }
   };
 

@@ -19,7 +19,6 @@ const PetProvider = ({ children }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("hello")
         const response = await axios.get('/api/users/products');
         setProducts(response.data.data);
       } catch (error) {
@@ -27,13 +26,23 @@ const PetProvider = ({ children }) => {
       }
     };
     fetchData();
-
-    const newSocket = io(process.env.REACT_APP_BACKEND_BASE_URL)
-    setSocket(newSocket);
-    return () => {
-      newSocket.disconnect()
-    }
   }, []);
+
+  useEffect( () =>{
+    console.log('login status updated', loginStatus)
+    if(loginStatus){
+      const role = localStorage.getItem('role')
+      const id = role=='user' ? localStorage.getItem('userID') : 'admin'
+
+      const newSocket = io(process.env.REACT_APP_BACKEND_BASE_URL,
+        {query: {id }}
+      )
+      setSocket(newSocket);
+    }else{
+      socket?.disconnect()
+      setSocket(null)
+    }
+  }, [loginStatus])
 
   ////////////////////// Pet Type Functions /////////////////////////////
   // Function to set the selected pet type

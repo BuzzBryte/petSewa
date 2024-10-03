@@ -18,6 +18,9 @@ router
   .delete('/products/:id', tryCatch(controller.deleteProduct))
 
   .get('/stats', tryCatch(controller.getStats))
-  .get('/orders', tryCatch(controller.getOrders));
+  .get('/orders', tryCatch(controller.getOrders))
+
+  // chat routes
+  .get('/getChatList', tryCatch(controller.getChatList))
 
 module.exports = router;

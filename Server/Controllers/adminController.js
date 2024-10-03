@@ -21,7 +21,7 @@ module.exports = {
     res.status(200).json({
       status: 'success',
       message: 'Successfully Logged In.',
-      data: { jwt_token: accessToken, name: admin.name },
+      data: { jwt_token: accessToken, name: admin.name, _id: admin._id },
     });
   },
 
@@ -192,4 +192,17 @@ module.exports = {
       data: stats,
     });
   },
+
+  // retrieve chat list
+
+  getChatList: async ( req, res) => {
+    const admin = await Admin.findOne({}).populate('chatList.user', 'name')
+    // console.log(admin)
+    res.status(200).json({
+      status: 'success',
+      message: 'Successfully fetched stats.',
+      data: admin.chatList,
+    });
+  },
+
 };
